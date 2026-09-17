@@ -1,0 +1,140 @@
+openapi: 3.0.3
+info:
+  title: API de Libros
+  description: API para administrar el catálogo de libros.
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8080/api/libros
+
+tags:
+  - name: Libros
+
+paths:
+  /:
+    get:
+      tags: [Libros]
+      summary: Consultar libros
+      operationId: consultarLibros
+      responses:
+        "200":
+          description: Lista de libros
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Libro"
+    post:
+      tags: [Libros]
+      summary: Registrar libro
+      operationId: registrarLibro
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LibroRequest"
+      responses:
+        "201":
+          description: Libro registrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Libro"
+        "400":
+          description: Datos inválidos
+
+  /{id}:
+    put:
+      tags: [Libros]
+      summary: Actualizar libro
+      operationId: actualizarLibro
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LibroRequest"
+      responses:
+        "200":
+          description: Libro actualizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Libro"
+        "404":
+          description: Libro no encontrado
+    delete:
+      tags: [Libros]
+      summary: Eliminar libro
+      operationId: eliminarLibro
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: Libro eliminado
+        "404":
+          description: Libro no encontrado
+
+  /titulo/{titulo}:
+    get:
+      tags: [Libros]
+      summary: Consultar libro por título
+      operationId: consultarLibroPorTitulo
+      parameters:
+        - name: titulo
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Libro encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Libro"
+        "404":
+          description: Libro no encontrado
+
+components:
+  schemas:
+    Estado:
+      type: string
+      enum: [DISPONIBLE, PRESTADO, BAJA]
+
+    LibroRequest:
+      type: object
+      required: [titulo, autor, isbn, anioPublicacion]
+      properties:
+        titulo:
+          type: string
+        autor:
+          type: string
+        isbn:
+          type: string
+        anioPublicacion:
+          type: integer
+        estado:
+          $ref: "#/components/schemas/Estado"
+
+    Libro:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+        - $ref: "#/components/schemas/LibroRequest"
