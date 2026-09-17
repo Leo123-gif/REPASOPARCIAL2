@@ -1,0 +1,83 @@
+{
+  "info": {
+    "name": "API de Reservas de Hotel",
+    "description": "Colección Postman para la API de Reservas (ejercicio3-diseno-reservas).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080/api/reservas" },
+    { "key": "id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Consultar reservas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}",
+          "host": ["{{baseUrl}}"]
+        }
+      }
+    },
+    {
+      "name": "Crear reserva",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombreCliente\": \"Juan Pérez\",\n  \"habitacion\": \"101\",\n  \"fechaEntrada\": \"2026-10-01\",\n  \"fechaSalida\": \"2026-10-05\",\n  \"estado\": \"CONFIRMADA\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}",
+          "host": ["{{baseUrl}}"]
+        }
+      }
+    },
+    {
+      "name": "Consultar reserva por id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/{{id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{id}}"]
+        }
+      }
+    },
+    {
+      "name": "Actualizar reserva",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombreCliente\": \"Juan Pérez\",\n  \"habitacion\": \"101\",\n  \"fechaEntrada\": \"2026-10-01\",\n  \"fechaSalida\": \"2026-10-07\",\n  \"estado\": \"CONFIRMADA\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/{{id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{id}}"]
+        }
+      }
+    },
+    {
+      "name": "Cancelar reserva",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/{{id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{id}}"]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "info": {
+    "name": "API de Libros",
+    "description": "Colección Postman para la API de Libros (ejercicio1-diseno-libros).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080/api/libros" },
+    { "key": "id", "value": "1" },
+    { "key": "titulo", "value": "Cien años de soledad" }
+  ],
+  "item": [
+    {
+      "name": "Consultar libros",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}",
+          "host": ["{{baseUrl}}"]
+        }
+      }
+    },
+    {
+      "name": "Registrar libro",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Cien años de soledad\",\n  \"autor\": \"Gabriel García Márquez\",\n  \"isbn\": \"978-0307474728\",\n  \"anioPublicacion\": 1967,\n  \"estado\": \"DISPONIBLE\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}",
+          "host": ["{{baseUrl}}"]
+        }
+      }
+    },
+    {
+      "name": "Consultar libro por título",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/titulo/{{titulo}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["titulo", "{{titulo}}"]
+        }
+      }
+    },
+    {
+      "name": "Actualizar libro",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Cien años de soledad\",\n  \"autor\": \"Gabriel García Márquez\",\n  \"isbn\": \"978-0307474728\",\n  \"anioPublicacion\": 1967,\n  \"estado\": \"PRESTADO\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/{{id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{id}}"]
+        }
+      }
+    },
+    {
+      "name": "Eliminar libro",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/{{id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{id}}"]
+        }
+      }
+    }
+  ]
+}
